@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  gochatdb:
+    container_name: gochatdb
+    image: postgres:16-alpine
+    ports:
+      - '5432:5432'
+    volumes:
+      - postsdb:/var/lib/postgresql/data
+    env_file: 
+      - .env
+volumes:
+  postsdb:
+    driver: local
+

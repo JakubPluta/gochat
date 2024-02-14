@@ -31,6 +31,24 @@ func (r *repository) CreateUser(ctx context.Context, user *User) (*User, error) 
 	return user, nil
 }
 
+// GetUserByEmail retrieves a user by email from the repository.
+//
+// ctx: context.Context
+// email: string
+// *User: user information
+// error: any error that occurred
+func (r *repository) GetUserByEmail(ctx context.Context, email string) (*User, error) {
+	var user User
+	query := `SELECT id, username, email, password FROM users WHERE email = $1`
+	err := r.db.QueryRowContext(ctx, query, email).Scan(&user.ID, &user.Username, &user.Email, &user.Password)
+	if err != nil {
+		return &User{}, err
+	}
+	return &user, nil
+}
+
+// NewRepository creates a new Repository with the given DBTX.
+// It returns a Repository.
 func NewRepository(db DBTX) Repository {
 	return &repository{db: db}
 }

@@ -34,8 +34,10 @@ type LoginUserRes struct {
 
 type Service interface {
 	CreateUser(ctx context.Context, request *CreateUserRequest) (*CreateUserResponse, error)
+	Login(ctx context.Context, request *LoginUserReq) (*LoginUserRes, error)
 }
 
 type Repository interface {
 	CreateUser(ctx context.Context, user *User) (*User, error)
+	GetUserByEmail(ctx context.Context, email string) (*User, error)
 }

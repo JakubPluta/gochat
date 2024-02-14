@@ -14,6 +14,9 @@ type Database struct {
 	db *sql.DB
 }
 
+// loadEnvVariable loads and returns the value of the specified environment variable.
+//
+// It takes a key of type string as a parameter and returns a string.
 func loadEnvVariable(key string) string {
 	err := godotenv.Load("../.env")
 	if err != nil {
@@ -26,6 +29,10 @@ func loadEnvVariable(key string) string {
 	return value
 }
 
+// NewDatabase initializes a new Database.
+//
+// No parameters.
+// Returns a pointer to Database and an error.
 func NewDatabase() (*Database, error) {
 	databaseUrl := loadEnvVariable("DATABASE_URL")
 	if databaseUrl == "" {
@@ -39,6 +46,10 @@ func NewDatabase() (*Database, error) {
 
 }
 
+// Close closes the database connection.
+//
+// It does not take any parameters.
+// It does not return any values.
 func (d *Database) Close() {
 	err := d.db.Close()
 	if err != nil {
@@ -46,6 +57,10 @@ func (d *Database) Close() {
 	}
 }
 
+// GetDB returns the SQL database.
+//
+// No parameters.
+// Returns *sql.DB.
 func (d *Database) GetDB() *sql.DB {
 	return d.db
 }

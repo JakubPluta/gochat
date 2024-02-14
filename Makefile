@@ -1,7 +1,6 @@
-
-up:
+start:
 	docker-compose up -d
-down:
+stop:
 	docker-compose down
 kill:
 	docker-compose kill

@@ -4,39 +4,36 @@ import { useRouter } from 'next/router'
 
 
 
+
 export type UserInfo = {
-    username: string 
-    id: string   
-}
+    username: string
+    id: string
+  }
 
 
-
-export const AuthContext = createContext<{
+  export const AuthContext = createContext<{
     authenticated: boolean
-    setAuthenticated: (authenticated: boolean) => void
+    setAuthenticated: (auth: boolean) => void
     user: UserInfo
     setUser: (user: UserInfo) => void
-}>({
+  }>({
     authenticated: false,
     setAuthenticated: () => {},
-    user: {
-        username: '',
-        id: ''
-    },
-    setUser: () => {}
-})
+    user: { username: '', id: '' },
+    setUser: () => {},
+  })
+
+
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [authenticated, setAuthenticated] = useState(false)
-    const [user, setUser] = useState<UserInfo>({
-        username: '',
-        id: ''
-    })
+    const [user, setUser] = useState<UserInfo>({ username: '', id: '' })
     const router = useRouter()
 
     useEffect(() => {
-        const userInfo = localStorage.getItem('userInfo')
+        const userInfo = localStorage.getItem('user_info')
+        console.log(userInfo)
         if (!userInfo) {
             if (window.location.pathname !== '/signup') {
                 router.push('/login')

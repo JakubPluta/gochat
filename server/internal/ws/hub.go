@@ -38,7 +38,7 @@ func (h *Hub) Run() {
 					// broadcas msg that client left the room
 					if len(h.Rooms[cl.RoomID].Clients) != 0 {
 						h.Broadcast <- &Message{
-							Content:  cl.Username + " has left the room",
+							Content:  "user left the chat",
 							RoomID:   cl.RoomID,
 							Username: cl.Username,
 						}

@@ -26,14 +26,12 @@ func (c *Client) writeMessage() {
 	}()
 
 	for {
-		msg, ok := <-c.Message
+		message, ok := <-c.Message
 		if !ok {
 			return
 		}
-		err := c.Conn.WriteJSON(msg)
-		if err != nil {
-			return
-		}
+
+		c.Conn.WriteJSON(message)
 	}
 }
 
@@ -50,13 +48,14 @@ func (c *Client) readMessage(hub *Hub) {
 				log.Printf("error: %v", err)
 			}
 			break
-
 		}
-		hub.Broadcast <- &Message{
+
+		msg := &Message{
 			Content:  string(m),
 			RoomID:   c.RoomID,
 			Username: c.Username,
 		}
-	}
 
+		hub.Broadcast <- msg
+	}
 }

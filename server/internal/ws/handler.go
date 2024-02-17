@@ -44,6 +44,7 @@ func (h *Handler) CreateRoom(c *gin.Context) {
 		Name:    req.Name,
 		Clients: make(map[string]*Client),
 	}
+
 	c.JSON(http.StatusOK, req)
 }
 
@@ -62,7 +63,7 @@ func (h *Handler) JoinRoom(c *gin.Context) {
 	}
 	// ws/JoinRoom/:roomId/:clientId
 	roomID := c.Param("roomId")
-	clientID := c.Query("clientId")
+	clientID := c.Query("userId")
 	username := c.Query("username")
 
 	client := &Client{
@@ -101,10 +102,12 @@ func (h *Handler) GetRooms(c *gin.Context) {
 func (h *Handler) GetClients(c *gin.Context) {
 	var clients []ClientResponse
 	roomId := c.Param("roomId")
+
 	if _, ok := h.hub.Rooms[roomId]; !ok {
 		clients = make([]ClientResponse, 0)
 		c.JSON(http.StatusOK, clients)
 	}
+
 	for _, c := range h.hub.Rooms[roomId].Clients {
 		clients = append(clients, ClientResponse{
 			ID:       c.ID,

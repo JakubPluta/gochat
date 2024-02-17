@@ -5,6 +5,7 @@ import { API_URL } from '@/constants'
 import { useRouter } from 'next/router'
 import autosize from 'autosize'
 import ChatBody from '@/components/chat'
+
 export type Message = {
     content: string
     client_id: string
@@ -24,7 +25,7 @@ export type Message = {
   
     useEffect(() => {
       if (conn === null) {
-        // router.push('/')
+        router.push('/')
         return
       }
   
@@ -36,7 +37,6 @@ export type Message = {
             headers: { 'Content-Type': 'application/json' },
           })
           const data = await res.json()
-          console.log(data)
   
           setUsers(data)
         } catch (e) {
@@ -52,7 +52,7 @@ export type Message = {
       }
   
       if (conn === null) {
-        // router.push('/')
+        router.push('/')
         return
       }
   
